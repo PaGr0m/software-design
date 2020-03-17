@@ -1,5 +1,7 @@
 package ru.ifmo.mit.repl.command;
 
+import ru.ifmo.mit.repl.env.ShellContext;
+
 import java.io.*;
 import java.util.List;
 
@@ -14,7 +16,8 @@ public class CommandPWD extends Command {
     @Override
     public void execute(InputStream input, OutputStream output) throws IOException {
         var writer = new PrintWriter(output);
-        writer.println(System.getProperty("user.dir"));
+//        writer.println(System.getProperty("user.dir"));
+        writer.println(ShellContext.getCurrentPath());
         writer.flush();
     }
 }

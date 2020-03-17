@@ -24,6 +24,10 @@ public abstract class CommandFactory {
 
     public abstract CommandExecutable makeGrepCommand(List<String> arguments);
 
+    public abstract CommandExecutable makeLsCommand(List<String> arguments);
+
+    public abstract CommandExecutable makeCdCommand(List<String> arguments);
+
     /*
         Функция-фабрика, позволяющая создавать инстансы команд, основываясь на их названиях.
      */
@@ -41,6 +45,10 @@ public abstract class CommandFactory {
                 return makeExitCommand(args);
             case "grep":
                 return makeGrepCommand(args);
+            case "ls":
+                return makeLsCommand(args);
+            case "cd":
+                return makeCdCommand(args);
             default:
                 args.add(0, commandName);
                 return makeExternalCommand(args);
