@@ -1,5 +1,23 @@
 language: java
+dist: trusty
+os:
+  - linux
+  - osx
+
 jdk:
   - oraclejdk13
+  - openjdk13
+before_install:
+  - export GRADLE=gradle-6.3
+  - export GRADLE_FILE=$GRADLE-bin.zip
+  - wget https://services.gradle.org/distributions/$GRADLE_FILE
+  - unzip -qq $GRADLE_FILE
+  - export GRADLE_HOME=$PWD/$GRADLE
+  - export PATH=$GRADLE_HOME/bin:$PATH
+  - gradle --version
+  - gradle wrapper
+
 script:
-  - ./gradlew test --console=plain
+  - ./gradlew --version
+  - ./gradlew check
+  - ./gradlew clean test
