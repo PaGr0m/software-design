@@ -43,18 +43,64 @@ Arguments:
 
 Запустить можно из Intellij IDEA или из консоли:
 
-```bash
+```shell script
 > ./gradlew run -q --console=plain
 ```
 
 Запустить тесты можно из Intellij IDEA или из консоли:
 
-```bash
+```shell script
 > ./gradlew test
 ```
 
 Парсеры ANTLR должны генериться при запуске, но если ее нет, то
 
-```bash
+```shell script
 > ./gradlew :generateGrammarSource
+```
+
+### Пример работы 
+
+```shell script
+> ./gradlew run -q --console=plain
+$ ls
+README.md
+build
+build.gradle.kts
+gradle
+gradle.properties
+gradlew
+gradlew.bat
+settings.gradle.kts
+src
+text.txt
+
+$ echo "$wow"
+Возникла ошибка: Не найдено идентификатора wow
+$ echo hello | wc
+1 1 5
+$ cat text.txt
+this
+is example
+of
+text
+
+$ cat text.txt | grep -i -A 1 t
+this
+is example
+text
+
+$ cat text.txt | grep -i T
+this
+text
+
+$ pwd
+/Users/artembobrov/Documents/JB-ITMO-2/sd-itmo
+$ echo 'wo  ho'
+wo  ho
+$ hello=world
+
+$ echo "'hello    $hello'"
+'hello    world'
+$ exit
 ```
