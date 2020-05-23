@@ -4,6 +4,9 @@ os:
   - linux
   - osx
 
+notifications:
+  email: false
+
 jdk:
   - oraclejdk13
   - openjdk13
