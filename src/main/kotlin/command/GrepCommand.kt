@@ -12,7 +12,7 @@ import java.io.*
 import java.util.*
 import java.util.regex.Pattern.CASE_INSENSITIVE
 
-
+// Класс, который парсит данные аргументы и запускает с ними поиск по образцу
 private class GrepArguments(
     private val inputStream: InputStream,
     private val outputStream: OutputStream
@@ -29,11 +29,14 @@ private class GrepArguments(
 
     val filePath by argument(help = "Путь до файла").optional()
 
+    // Запуск команды
     override fun run() {
         val input = filePath?.let { FileInputStream(File(it)) } ?: inputStream
         grep(input, outputStream)
     }
 
+    // Запуск считывания с входного поток.
+    // Результат поиска построчно выводится в выходной поток
     private fun grep(input: InputStream, output: OutputStream) {
         val pattern = regex(this).toPattern(flags(this))
         val scanner = Scanner(input)
@@ -59,6 +62,7 @@ private class GrepArguments(
 
 
     companion object {
+        // Создает маску поиска в зависимости от аргуметов
         private fun flags(argument: GrepArguments): Int {
             var flag = 0
             if (argument.isCaseInsensitive)
@@ -66,6 +70,7 @@ private class GrepArguments(
             return flag
         }
 
+        // Если необходимо, преобразует образец в зависимости от аргуметов
         private fun regex(argument: GrepArguments): String {
             var regex: String = argument.pattern
             if (argument.isWholeWordSearch)

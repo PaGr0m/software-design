@@ -5,6 +5,8 @@ import antlr.ShellParser
 import executor.ShellContext
 
 /// Класс, переделывающий дерево разбора ANTLR в ProgramAST
+/// Каждый visitor.+\b определяет перевод своей вершины ParseTree ANTLR в вершину `ProgramAST`
+/// Перевод может не удаться, тогда вернется  `null`
 class ShellVisitorImpl(private val context: ShellContext) : ShellBaseVisitor<ProgramAST?>() {
     override fun visitProgram(ctx: ShellParser.ProgramContext?): ProgramAST? {
         return visitShellCommand(ctx?.shellCommand())
@@ -96,7 +98,7 @@ class ShellVisitorImpl(private val context: ShellContext) : ShellBaseVisitor<Pro
 
     override fun visitWeakQuoting(ctx: ShellParser.WeakQuotingContext?): WeakQuoted? {
         return ctx?.let {
-            val inside = processWeak(it.WeakQuotedString().text.drop(1).dropLast(1))
+            val inside = processSubstitute(it.WeakQuotedString().text.drop(1).dropLast(1))
             WeakQuoted(inside)
         }
     }
@@ -109,12 +111,12 @@ class ShellVisitorImpl(private val context: ShellContext) : ShellBaseVisitor<Pro
 
     override fun visitVariable(ctx: ShellParser.VariableContext?): Variable? {
         return ctx?.let {
-            val identifier = processWeak(it.VAR_ID().text)
+            val identifier = processSubstitute(it.VAR_ID().text)
             Variable(identifier)
         }
     }
 
-     private fun processWeak(original: String): String {
+     private fun processSubstitute(original: String): String {
         var string = ""
         var offset = 0
         while (offset < original.length) {
@@ -144,6 +146,6 @@ class ShellVisitorImpl(private val context: ShellContext) : ShellBaseVisitor<Pro
 
     companion object {
         private const val IDENTIFIER_PATTERN = "[_a-zA-Z][_a-zA-Z0-9]*"
-        val IDENTIFIER_REGEX = Regex(IDENTIFIER_PATTERN)
+        private val IDENTIFIER_REGEX = Regex(IDENTIFIER_PATTERN)
     }
 }

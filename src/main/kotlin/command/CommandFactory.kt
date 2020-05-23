@@ -14,7 +14,7 @@ abstract class CommandFactory {
     protected abstract fun makeExitCommand(exit: Exit): ShellCommand
     protected abstract fun makeGrepCommand(grep: Grep): ShellCommand
 
-    /// Функция-фабрика, которая создает команду шелла в зависимости от аргумента
+    /// Функция-фабрика, которая создает необходимую команду шелла в зависимости от аргумента
     fun makeCommand(command: Command): ShellCommand {
         return when (command) {
             is Assign -> makeAssignCommand(command)

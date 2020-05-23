@@ -8,7 +8,6 @@ class CommandFactoryImpl(private val context: ShellContext) : CommandFactory() {
 
     override fun makeCatCommand(cat: Cat): ShellCommand = CatCommand(cat)
 
-
     override fun makeEchoCommand(echo: Echo): ShellCommand = EchoCommand(echo)
 
     override fun makeExternalCommand(external: External): ShellCommand = ExternalCommand(external)

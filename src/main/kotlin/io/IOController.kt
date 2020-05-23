@@ -18,7 +18,9 @@ interface IOController {
     // Закрывает входной поток
     fun closeInput()
 
-
+    // Входной поток, которым оперирует контроллер
     val inputStream: InputStream
+
+    // Выходной поток, которым оперирует контроллер
     val outputStream: OutputStream
 }

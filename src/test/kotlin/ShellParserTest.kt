@@ -28,7 +28,7 @@ internal class ShellParserTest {
     fun parseAssign() {
         addDummyContext()
         val program = parseStringNonNull("a=b")
-        assertEquals("a = b", program.toString())
+        assertEquals("a=b", program.toString())
     }
 
     @Test
