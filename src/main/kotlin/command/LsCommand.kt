@@ -7,8 +7,9 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.io.PrintWriter
 
-
+// Команда `ls`
 class LsCommand(private val ls: Ls, private val context: ShellContext) : ShellCommand {
+    // Выдает список файлов директории. Принимает 0 или 1 аргумент
     override fun execute(inputStream: InputStream, outputStream: OutputStream) {
         val input = ls.literal?.content ?: context.currentPath
         ls(input, outputStream)

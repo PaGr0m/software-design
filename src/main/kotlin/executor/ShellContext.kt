@@ -8,6 +8,8 @@ data class ShellContext(
     private val storage: MutableMap<String, String> = mutableMapOf(),
     var currentPath: String = System.getProperty("user.dir")
 ) : MutableMap<String, String> by storage {
+
+    // Текущий путь
     fun getPath(arguments: String): String? {
         if (arguments.isEmpty()) {
             return currentPath
