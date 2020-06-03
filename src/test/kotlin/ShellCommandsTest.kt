@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import parse.*
-
-import java.io.*
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 
 class ShellCommandsTest {
@@ -87,7 +89,16 @@ class ShellCommandsTest {
 
     @Test
     fun testLsCommand() {
-        val command = ExternalCommand(External(listOf(Identifier("ls"), Identifier("-la"))))
+        val command = LsCommand(Ls(null), context)
+        val input = ByteArrayInputStream("".toByteArray())
+        val output = makeUselessOutput()
+        command.execute(input, output)
+        assertFalse(output.toString().isEmpty())
+    }
+
+    @Test
+    fun testCdCommand() {
+        val command = LsCommand(Ls(null), context)
         val input = ByteArrayInputStream("".toByteArray())
         val output = makeUselessOutput()
         command.execute(input, output)
@@ -96,7 +107,7 @@ class ShellCommandsTest {
 
     @Test
     fun testPWDCommand() {
-        val command = PwdCommand()
+        val command = PwdCommand(context)
         val input = ByteArrayInputStream("".toByteArray())
         val output = makeUselessOutput()
         command.execute(input, output)

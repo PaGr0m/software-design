@@ -13,6 +13,8 @@ abstract class CommandFactory {
     protected abstract fun makeWCCommand(wc: WC): ShellCommand
     protected abstract fun makeExitCommand(exit: Exit): ShellCommand
     protected abstract fun makeGrepCommand(grep: Grep): ShellCommand
+    protected abstract fun makeCdCommand(cd: Cd): ShellCommand
+    protected abstract fun makeLsCommand(ls: Ls): ShellCommand
 
     /// Функция-фабрика, которая создает необходимую команду шелла в зависимости от аргумента
     fun makeCommand(command: Command): ShellCommand {
@@ -24,6 +26,8 @@ abstract class CommandFactory {
             is WC -> makeWCCommand(command)
             is Echo -> makeEchoCommand(command)
             is Grep -> makeGrepCommand(command)
+            is Cd -> makeCdCommand(command)
+            is Ls -> makeLsCommand(command)
             is External -> makeExternalCommand(command)
             is Pipe -> makePipeCommand(command)
         }

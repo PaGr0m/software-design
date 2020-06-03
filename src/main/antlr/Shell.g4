@@ -6,10 +6,12 @@ program: shellCommand EOF;
 shellCommand: assignment | pipe | command |;
 
 pipe: command (PIPE command)+;
-command: cat | echo | wc | pwd | exit | grep | external;
+command: cat | echo | wc | pwd | exit | grep | external | ls | cd;
 
 pwd: PWD;
 exit: EXIT;
+ls: LS literal?;
+cd: CD literal?;
 cat: CAT literal?;
 wc: WC literal?;
 echo: ECHO literal*;
@@ -25,6 +27,8 @@ id: ID;
 variable: VAR_ID;
 
 CAT: 'cat';
+LS: 'ls';
+CD: 'cd';
 ECHO: 'echo';
 WC: 'wc';
 PWD: 'pwd';

@@ -14,11 +14,15 @@ class CommandFactoryImpl(private val context: ShellContext) : CommandFactory() {
 
     override fun makePipeCommand(pipe: Pipe): ShellCommand = PipeCommand(pipe.commands.map(this::makeCommand))
 
-    override fun makePwdCommand(pwd: Pwd): ShellCommand = PwdCommand()
+    override fun makePwdCommand(pwd: Pwd): ShellCommand = PwdCommand(context)
 
     override fun makeWCCommand(wc: WC): ShellCommand = WCCommand(wc)
 
     override fun makeExitCommand(exit: Exit): ShellCommand = ExitCommand()
 
     override fun makeGrepCommand(grep: Grep): ShellCommand = GrepCommand(grep)
+
+    override fun makeCdCommand(cd: Cd): ShellCommand = CdCommand(cd, context)
+
+    override fun makeLsCommand(ls: Ls): ShellCommand = LsCommand(ls, context)
 }

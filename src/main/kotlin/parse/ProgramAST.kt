@@ -58,12 +58,21 @@ class WC(val literal: Literal?) : Command() {
 // Синтаксическая структура вывода все своих аргуметов
 class Echo(val literals: List<Literal>) : Command() {
     override fun toString(): String = show("echo", literals)
-
 }
 
 // Синтаксическая структура поиск по образцу
 class Grep(val literals: List<Literal>) : Command() {
     override fun toString(): String = show("grep", literals)
+}
+
+class Cd(val literal: Literal?) : Command() {
+    //    override fun toString(): String = show("cd", literal?.toString())
+    override fun toString(): String = "cd"
+}
+
+class Ls(val literal: Literal?) : Command() {
+    //    override fun toString(): String = show("ls", literal?.toString())
+    override fun toString(): String = "ls"
 }
 
 // Синтаксическая структура создания и присвоения переменной некоторого значения
@@ -91,12 +100,14 @@ class FullQuoted(override val content: String) : Literal() {
 class WeakQuoted(override val content: String) : Literal() {
     override fun toString(): String = "\"${this.content}\""
 }
+
 // Синтаксическая структура, означающая идентификатор (lvalue в assign)
 data class Identifier(private val name: String) : Literal() {
     override val content: String get() = name
 
     override fun toString(): String = content
 }
+
 // Синтаксическая структура, означающая взятие значения у переменной ($identifier)
 data class Variable(private val name: String) : Literal() {
     override val content: String get() = name

@@ -30,6 +30,8 @@ class ShellVisitorImpl(private val context: ShellContext) : ShellBaseVisitor<Pro
         return ctx?.cat()?.let(this::visitCat)
             ?: ctx?.echo()?.let(this::visitEcho)
             ?: ctx?.wc()?.let(this::visitWc)
+            ?: ctx?.ls()?.let(this::visitLs)
+            ?: ctx?.cd()?.let(this::visitCd)
             ?: ctx?.pwd()?.let(this::visitPwd)
             ?: ctx?.exit()?.let(this::visitExit)
             ?: ctx?.grep()?.let(this::visitGrep)
@@ -65,6 +67,20 @@ class ShellVisitorImpl(private val context: ShellContext) : ShellBaseVisitor<Pro
         return ctx?.let {
             val literals = it.literal().mapNotNull(this::visitLiteral)
             Grep(literals)
+        }
+    }
+
+    override fun visitLs(ctx: ShellParser.LsContext?): Ls? {
+        return ctx?.let {
+            val literal = it.literal().let(this::visitLiteral)
+            Ls(literal)
+        }
+    }
+
+    override fun visitCd(ctx: ShellParser.CdContext?): Cd? {
+        return ctx?.let {
+            val literal = it.literal().let(this::visitLiteral)
+            Cd(literal)
         }
     }
 
@@ -116,7 +132,7 @@ class ShellVisitorImpl(private val context: ShellContext) : ShellBaseVisitor<Pro
         }
     }
 
-     private fun processSubstitute(original: String): String {
+    private fun processSubstitute(original: String): String {
         var string = ""
         var offset = 0
         while (offset < original.length) {
